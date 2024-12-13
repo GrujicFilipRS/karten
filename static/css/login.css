@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.log-sign-txt p {
+    color: white;
+    text-align: center;
+    font-size: 32pt;
+}
+
+.grey-txt {
+    color: #7F7F7F;
+}
