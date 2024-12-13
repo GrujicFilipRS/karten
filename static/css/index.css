@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Jaldi", sans-serif;
+}
+
+body {
+    background-color: #1F1F21;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.hero-img {
+    width: 600px;
+}
+
+.hero-img img {
+    width: 100%;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-txt p {
+    color: white;
+    text-align: center;
+    font-size: 42pt;
+    font-weight: bold;
+}
+
+.hero-btn {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 605px) {
+
+
+    .hero-txt p {
+        font-size: 22pt;
+    }
+
+    .hero-img {
+        width: 330px;
+    }
+
+    .hero-btn button {
+        width: 100px;
+        height: 40px;
+        font-size: 16pt;
+        border-radius: 10px;
+    }
+}

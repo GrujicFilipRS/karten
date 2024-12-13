@@ -1,0 +1,14 @@
+.primary-btn {
+    width: 140px;
+    height: 60px;
+    background-color: #FF9A2E;
+    border: 2px solid #9E5700;
+    border-radius: 20px;
+    font-size: 20pt;
+    font-weight: bold;
+    transition: 0.25s;
+}
+
+.primary-btn:hover {
+    background-color: #FF8400;
+}
