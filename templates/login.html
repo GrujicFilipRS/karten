@@ -11,29 +11,47 @@
     <title>Karten - Login</title>
 </head>
 <body>
-    <div class="log-sign-txt">
-        <p>
-            <b>Log in</b> <span class="grey-txt"> / Sign up</span>
-        </p>
-    </div>
-    <div class="input-field user-input">
-        <div class="input-img user-img"><img src="../static/img/user.png"></div>
-        <div class="input-input user-input-field"><input name="user" placeholder="Username" type="text"></div>
-    </div>
+    <form action="/login_post" method="post">
+        <div class="log-sign-txt">
+            <p>
+                <b>Log in</b> <span class="grey-txt"> / Sign up</span>
+            </p>
+        </div>
 
-    <div class="input-field pwd-input">
-        <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
-        <div class="input-input pwd-input-field"><input name="pwd" placeholder="Password" type="password"></div>
-    </div>
+        <div class="inputs">
+            <div class="inputs-geschlechtswehrkehr">
+                <div class="input-field user-input">
+                    <div class="input-img user-img"><img src="../static/img/user.png"></div>
+                    <div class="input-input user-input-field"><input id="user" name="user" placeholder="Username" type="text"></div>
+                </div>
+    
+                <div class="input-field pwd-input">
+                    <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
+                    <div class="input-input pwd-input-field"><input id="pwd" name="pwd" placeholder="Password" type="password"></div>
+                </div>
+            </div>
+        </div>        
+    
+        <div class="options">
+            <button type="submit" class="primary-btn" id="login-btn" disabled>Log in</button>
+            <p>OR</p>
+            <a href="./sigma">
+                <button class="google-cont">
+                    <div class="google-cont-img">
+                        <img src="../static/img/google.png">
+                    </div>
+                    <p class="google-cont-txt">
+                        Continue with Google
+                    </p>
+                </button>
+            </a>
+        </div>
 
-    <div class="options">
-        <button type="submit">Log in</button>
-        <p>OR</p>
-        <a href="./sigma">
-            <button class="google-cont">
-                Continue with Google
-            </button>
-        </a>
-    </div>
+        <div class="error-msg">
+            <p>Error: error message</p>
+        </div>
+    </form>
 </body>
+
+<script src="../static/js/login.js"></script>
 </html>

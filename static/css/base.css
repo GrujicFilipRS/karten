@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: "Jaldi", sans-serif;
+    text-decoration: none;
 }
 
 body {
@@ -21,13 +22,18 @@ body {
 
 .primary-btn:hover {
     background-color: #FF8400;
+    cursor: pointer;
+}
+
+.primary-btn:disabled {
+    background-color: #FF8400;
 }
 
 .input-field {
     display: flex;
-    width: 835px;
-    height: 100px;
-    border: 2px solid white;
+    width: 650px;
+    height: 80px;
+    border: 2px solid #7F7F7F;
     border-radius: 25px;
 }
 
@@ -37,7 +43,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 80px;
 }
 
 .input-img img {
@@ -56,7 +61,7 @@ body {
     border: none;
     padding-left: 20px;
     color: white;
-    font-size: 28pt;
+    font-size: 24pt;
 }
 
 .input-input input:focus {
@@ -66,4 +71,41 @@ body {
 .input-input input::placeholder {
     color: white;
     opacity: 1;
+}
+
+.google-cont {
+    background-color: #1F1F21;
+    border: 1px solid white;
+    width: 260px;
+    height: 60px;
+    display: flex;
+    color: white;
+    border-radius: 20px;
+    transition: 0.25s;
+}
+
+.google-cont-img {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    margin-left: 5px;
+}
+
+.google-cont img {
+    height: 75%;
+    width: 75%;
+}
+
+.google-cont .google-cont-txt {
+    font-size: 16pt;
+    margin: 0;
+    width: calc(100% - 65px);
+    text-align: left;
+}
+
+.google-cont:hover {
+    background-color: #151516;
+    cursor: pointer;
 }
