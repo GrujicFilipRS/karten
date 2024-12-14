@@ -1,7 +1,9 @@
 from flask import Flask, redirect, render_template
-import flask
+from data import db_session
+from data.__all_models import User, Deck, Card
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
@@ -11,6 +13,7 @@ def index():
     else:
         return redirect('/login')
 
+
 @app.route('/login')
 def login():
     # TODO Login
@@ -19,5 +22,7 @@ def login():
     else:
         return redirect('/dashboard')
 
+
 if __name__ == '__main__':
-    app.run()
+    db_session.global_init("db/library.sqlite")
+    app.run(debug=True, threaded=True)
