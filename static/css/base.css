@@ -29,6 +29,10 @@ body {
     background-color: #FF8400;
 }
 
+.primary-btn:disabled:hover {
+    cursor: auto;
+}
+
 .input-field {
     display: flex;
     width: 650px;
