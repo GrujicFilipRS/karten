@@ -14,7 +14,7 @@
     <form action="/login_post" method="post">
         <div class="log-sign-txt">
             <p>
-                <b>Log in</b> <span class="grey-txt"> / Sign up</span>
+                <b>Log in</b> <a href="/signup" class="grey-txt"> / Sign up</a>
             </p>
         </div>
 
@@ -35,16 +35,16 @@
         <div class="options">
             <button type="submit" class="primary-btn" id="login-btn" disabled>Log in</button>
             <p>OR</p>
-            <a href="./sigma">
-                <button class="google-cont">
+            <div href="./sigma">
+                <a class="google-cont">
                     <div class="google-cont-img">
                         <img src="../static/img/google.png">
                     </div>
                     <p class="google-cont-txt">
                         Continue with Google
                     </p>
-                </button>
-            </a>
+                </a>
+            </div>
         </div>
 
         <div class="error-msg">
