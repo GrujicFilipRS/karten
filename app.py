@@ -15,13 +15,20 @@ def index():
 
 
 @app.route('/login')
-def login():
+def login_page():
     # TODO Login
     if True:
         return render_template('login.html')
     else:
         return redirect('/dashboard')
 
+@app.route('/signup')
+def signup_page():
+    # TODP Signup
+    if True:
+        return render_template('signup.html')
+    else:
+        return redirect('/dashboard')
 
 if __name__ == '__main__':
     db_session.global_init("db/library.sqlite")
