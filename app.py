@@ -61,5 +61,5 @@ def signup_page():
 
 
 if __name__ == '__main__':
-    db_session.global_init("db/library.sqlite")
+    db_session.global_init("db/karten.sqlite")
     app.run(debug=True, threaded=True)
