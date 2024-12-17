@@ -24,7 +24,7 @@ def load_user(user_id):
 def index():
     if not current_user.is_authenticated:
         return render_template('index.html')
-    return render_template('index.html', message="You are logged in")
+    return render_template('dashboard.html', user=current_user.username)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -57,7 +57,7 @@ def signup_page():
     if True:
         return render_template('signup.html')
     else:
-        return redirect('/dashboard')
+        return redirect('/')
 
 
 if __name__ == '__main__':
