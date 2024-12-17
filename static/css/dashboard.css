@@ -1,0 +1,224 @@
+.title {
+    color: white;
+    font-size: 40pt;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    align-items: center;
+}
+
+.user-btn {
+    background-color: #1f1F21;
+    border: 0;
+    height: 80px;
+    width: 80px;
+}
+
+.user-btn img {
+    height: 100%;
+    transition: 0.25s;
+}
+
+.nav-btns:disabled {
+    display: none;
+}
+
+.user-btn img:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
+}
+
+.nav-btns {
+    position: absolute;
+    width: 350px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    right: 100px;
+    margin-top: 5px;
+}
+
+.nav-btns button {
+    background-color: #1f1F21;
+    border: 2px solid white;
+    border-radius: 25px;
+    width: 100%;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 7%;
+    padding-right: 3%;
+    color: white;
+    font-size: 22pt;
+    cursor: pointer;
+}
+
+.nav-btns button:hover {
+    background-color: #151516;
+    transition: 0.25s;
+}
+
+.nav-btns button img {
+    height: 85%;
+}
+
+.nav-btns .logout-btn {
+    background-color: #2C1819;
+    margin-top: 6px;
+    transition: 0.25s;
+}
+
+.nav-btns .logout-btn:hover {
+    background-color: #1F1111;
+}
+
+.my-decks-skibidi {
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-top: 35px;
+    margin-left: 50px;
+}
+
+.my-decks-skibidi p {
+    font-size: 40pt;
+    margin-right: 35px;
+}
+
+.my-decks-skibidi a {
+    width: 55px;
+    height: 55px;
+}
+
+.my-decks-skibidi a button {
+    width: 100%;
+    height: 100%;
+    background-color: #1f1f21;
+    border-radius: 25px;
+    border: 1px solid white;
+    color: white;
+    font-size: 22pt;
+    transition: 0.25s;
+}
+
+.my-decks-skibidi a button:hover {
+    background-color: #151516;
+    cursor: pointer;
+}
+
+.my-decks-list {
+    display: flex;
+    margin-left: 20px;
+    flex-wrap: wrap;
+}
+
+.deck {
+    width: 375px;
+    height: 210px;
+    background-color: #1f1f21;
+    border: 2px solid white;
+    color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 25px;
+}
+
+.deck .title {
+    width: 100%;
+    text-align: center;
+    font-size: 28pt;
+}
+
+.deck .desc {
+    width: 65%;
+    margin-left: 5%;
+}
+
+.deck .deck-btns {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:start;
+}
+
+.deck .deck-btns button {
+    background-color: #1f1f21;
+    border: 1px solid white;
+    color: white;
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    transition: 0.25s;
+    cursor:pointer;
+    margin-top: 5px;
+}
+
+.deck .deck-btns .practice-btn button {
+    background-color: #192B1A;
+}
+
+.deck .deck-btns .practice-btn button:hover {
+    background-color: #0F1A0F;
+}
+
+.deck .deck-btns .edit-btn button {
+    background-color: #181A28;
+}
+
+.deck .deck-btns .edit-btn button:hover {
+    background-color: #0F1018;
+}
+
+.other-decks-list .deck .practice-btn {
+    margin-top: 25px;
+}
+
+@media (max-width: 750px) {
+    .title {
+        font-size: 32pt;
+    }
+
+    nav {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .nav-btns {
+        right: 50px;
+    }
+
+    .user-btn {
+        height: 60px;
+        width: 60px;
+    }
+}
+
+@media (max-width: 450px) {
+    .title {
+        font-size: 24pt;
+    }
+
+    .user-btn {
+        height: 50px;
+        width: 50px;
+    }
+
+    .nav-btns {
+        right: 25px;
+        width: 300px;
+    }
+
+    nav {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}

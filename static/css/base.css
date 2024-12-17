@@ -5,6 +5,10 @@
     text-decoration: none;
 }
 
+p:hover {
+    cursor:default;
+}
+
 body {
     background-color: #1F1F21;
 }

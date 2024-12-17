@@ -3,9 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <script src="../static/js/dashboard.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <title>Karten - Dashboard</title>
 </head>
 <body>
-    
+    <nav>
+        <p class="title">Card Dashboard</p>
+        <button class="user-btn" onclick="toggleNavBar()"><img src="../static/img/user.png"></button>
+    </nav>
+
+    <div class="nav-btns" id="nav-btns" style="display:none;">
+        <a href="/"><button>
+            <p>Dashboard</p>
+            <img src="../static/img/dashboard.png">
+        </button></a>
+
+        <a href="/logout"><button class="logout-btn">
+            <p>Log out</p>
+            <img src="../static/img/logout.png">
+        </button></a>
+    </div>
+
+    <div class="my-decks-skibidi">
+        <p>My decks</p>
+        <a href="/add-deck"><button>+</button></a>
+    </div>
+
+    <div class="my-decks-list">
+        <div class="deck deck1">
+            <p class="title">Title</p>
+            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="deck-btns">
+                <a href="/practice/deck-id" class="practice-btn"><button>
+                    Practice
+                </button></a>
+                <a href="/edit/deck-id" class="edit-btn"><button>
+                    Edit
+                </button></a>
+            </div>
+        </div>
+
+        <div class="deck deck2">
+            <p class="title">Title</p>
+            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="deck-btns">
+                <a href="/practice/deck-id" class="practice-btn"><button>
+                    Practice
+                </button></a>
+                <a href="/edit/deck-id" class="edit-btn"><button>
+                    Edit
+                </button></a>
+            </div>
+        </div>
+
+        <div class="deck deck3">
+            <p class="title">Title</p>
+            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="deck-btns">
+                <a href="/practice/deck-id" class="practice-btn"><button>
+                    Practice
+                </button></a>
+                <a href="/edit/deck-id" class="edit-btn"><button>
+                    Edit
+                </button></a>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div class="my-decks-skibidi">
+        <p>Other decks</p>
+        <a href="/add-other-deck"><button>+</button></a>
+    </div>
+
+    <div class="my-decks-list other-decks-list">
+        <div class="deck deck1">
+            <p class="title">Title</p>
+            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="deck-btns">
+                <a href="/practice/deck-id" class="practice-btn"><button>
+                    Practice
+                </button></a>
+            </div>
+        </div>
+
+        <div class="deck deck2">
+            <p class="title">Title</p>
+            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="deck-btns">
+                <a href="/practice/deck-id" class="practice-btn"><button>
+                    Practice
+                </button></a>
+            </div>
+        </div>
+
+        <div class="deck deck3">
+            <p class="title">Title</p>
+            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="deck-btns">
+                <a href="/practice/deck-id" class="practice-btn"><button>
+                    Practice
+                </button></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ahuet" style="height: 100px;"></div>
 </body>
 </html>
