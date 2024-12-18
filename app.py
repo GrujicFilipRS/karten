@@ -29,18 +29,21 @@ def index():
 
 @app.route('/login', methods=["GET", "POST"])
 def login_page():
+    if current_user.is_authenticated:
+        return redirect('/dashboard')
+
     login_form = UserLogInForm()
     if login_form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.username == login_form.username.data).first()
-        if user and user.check_password(login_form.password.data):
-            login_user(user, remember=login_form.remember_me.data)
-            return redirect("/")
-        return render_template(
-            "login.html",
-            login_form=login_form,
-            message="false_mail_or_password"  # Ne postoji nalog sa takvim korisničkim imenom i šifrom
-        )
+        if not (user and user.check_password(login_form.password.data)):
+            return render_template(
+                "login.html",
+                login_form=login_form,
+                message="false_mail_or_password"
+            )
+        login_user(user, remember=login_form.remember_me.data)
+        return redirect("/")
     return render_template("login.html", login_form=login_form)
 
 
@@ -51,13 +54,27 @@ def logout():
     return redirect("/")
 
 
-@app.route('/signup')
+@app.route('/signup', methods=["GET", "POST"])
 def signup_page():
-    # TODP Signup
-    if True:
-        return render_template('signup.html')
-    else:
+    if current_user.is_authenticated:
+        return redirect('/dashboard')
+
+    sign_up_form = UserSignUpForm()
+    if sign_up_form.validate_on_submit():
+        db_sess = db_session.create_session()
+        if db_sess.query(User).filter(User.username == sign_up_form.username.data).first() is not None:
+            return render_template(
+                'signup.html',
+                message="username_exists",
+                sign_up_form=sign_up_form
+            )
+        user = User(username=sign_up_form.username.data)
+        user.set_password(sign_up_form.password.data)
+        db_sess.add(user)
+        db_sess.commit()
+        login_user(user)
         return redirect('/')
+    return render_template('signup.html', sign_up_form=sign_up_form)
 
 
 if __name__ == '__main__':

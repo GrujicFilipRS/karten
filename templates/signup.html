@@ -12,6 +12,7 @@
 </head>
 <body>
     <form action="" method="post">
+        {{ sign_up_form.hidden_tag() }}
         <div class="log-sign-txt">
             <p>
                 <a href="/login" class="grey-txt">Log in / </a><b>Sign up</b>
@@ -20,25 +21,54 @@
 
         <div class="inputs">
             <div class="inputs-geschlechtswehrkehr">
-                <div class="input-field user-input">
-                    <div class="input-img user-img"><img src="../static/img/user.png"></div>
-                    <div class="input-input user-input-field"><input id="user" name="user" placeholder="Username" type="text"></div>
-                </div>
-    
-                <div class="input-field pwd-input">
-                    <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
-                    <div class="input-input pwd-input-field"><input id="pwd" name="pwd" placeholder="Password" type="password"></div>
-                </div>
 
-                <div class="input-field pwd-conf-input">
-                    <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
-                    <div class="input-input pwd-input-field"><input id="pwd_conf" name="pwd_confirm" placeholder="Confirm password" type="password"></div>
-                </div>
+                <p>
+                    <div class="input-field user-input">
+                        <div class="input-img user-img"><img src="../static/img/user.png"></div>
+                        <div class="input-input user-input-field">
+                            {{ sign_up_form.username(class="form-control", type="text", placeholder="Username") }}
+                        </div>
+                    </div>
+                    {% for error in sign_up_form.username.errors %}
+                        <div style="color:red" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </p>
+
+                <p>
+                    <div class="input-field pwd-input">
+                        <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
+                        <div class="input-input pwd-input-field">
+                            {{ sign_up_form.password(id="password", class="form-control", type="password", placeholder="Password") }}
+                        </div>
+                    </div>
+                    {% for error in sign_up_form.password.errors %}
+                        <div style="color:red" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </p>
+
+                <p>
+                    <div class="input-field pwd-conf-input">
+                        <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
+                        <div class="input-input pwd-input-field">
+                            {{ sign_up_form.repeat_password(id="repeat_password", class="form-control", type="password", placeholder="Confirm password") }}
+                        </div>
+                    </div>
+                    {% for error in sign_up_form.repeat_password.errors %}
+                        <div style="color:red" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </p>
+
             </div>
-        </div>        
-    
+        </div>
+        <div style="color:red" role="alert">{{ message }}</div>
         <div class="options">
-            <button type="submit" class="primary-btn" id="login-btn" disabled>Sign up</button>
+            <p>{{ sign_up_form.submit(type="submit", class="primary-btn", id="login-btn") }}</p>
             <p>OR</p>
             <div href="./sigma">
                 <a class="google-cont">
@@ -51,10 +81,7 @@
                 </a>
             </div>
         </div>
-
-        <div class="error-msg">
-            <p>Error: error message</p>
-        </div>
+        <div style="color:red">{% if current_user.is_authenticated %}{{ current_user.username }}{% endif %}</div>
     </form>
 </body>
 
