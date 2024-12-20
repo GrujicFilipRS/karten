@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from data import db_session
 from data.__all_models import User, Deck, Card
@@ -25,6 +25,47 @@ def index():
     if not current_user.is_authenticated:
         return render_template('index.html')
     return render_template('dashboard.html', user=current_user.username)
+
+
+@app.route('/deck/<deck_id:int>')
+def view_deck(deck_id: int):
+    db_sess = db_session.create_session()
+    deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
+    return render_template("view_deck.html", deck=deck)
+
+
+@app.route('/deck/<deck_id:int>/edit')
+@login_required
+def edit_deck(deck_id: int):
+    db_sess = db_session.create_session()
+    deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
+    user = db_sess.query(User).filter(User.id == deck.user_created_id).first()
+    if user.id != current_user.id:
+        flash('You do not have permission to edit this deck.')
+        return redirect(f'/deck/{deck_id}')
+
+    # if request.method == 'POST':
+    #     # TODO logic for getting the information about decks from js
+    #     pass
+    #
+    #     db.session.commit()
+    #     flash('Deck updated successfully.')
+    #     return redirect(f'/deck/{deck_id}')
+
+    return render_template('deck_edit.html', deck=deck)
+
+
+@app.route('/deck/<deck_id:int>/delete')
+@login_required
+def delete_deck(deck_id: int):
+    db_sess = db_session.create_session()
+    deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
+    user = db_sess.query(User).filter(User.id == deck.user_created_id).first()
+    if user.id != current_user.id:
+        flash('You do not have permission to edit this deck.')
+        return redirect(f'/deck/{deck_id}')
+    db_sess.delete(deck)
+    return redirect('/dashboard')
 
 
 @app.route('/login', methods=["GET", "POST"])
