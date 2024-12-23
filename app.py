@@ -27,14 +27,25 @@ def index():
     return render_template('dashboard.html', user=current_user.username)
 
 
-@app.route('/deck/<deck_id:int>')
+# TODO: deck to json function
+
+@app.route('/deck/<int:deck_id>')
 def view_deck(deck_id: int):
     db_sess = db_session.create_session()
     deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
-    return render_template("view_deck.html", deck=deck)
+    user_created = db_sess.query(User).filter(User.id == deck.user_created_id).first()
+    cards = db_sess.query(Card).filter(Card.deck_id == deck.id).all()
+    cards_json = [card.to_dict() for card in cards]
+    deck_dict = {
+        "deck_name": deck.name,
+        "user_created_name": user_created.username,
+        "time_changed": deck.time_changed,
+        "cards": cards_json
+    }
+    return render_template("view_deck.html", deck=deck_dict)
 
 
-@app.route('/deck/<deck_id:int>/edit')
+@app.route('/deck/<int:deck_id>/edit')
 @login_required
 def edit_deck(deck_id: int):
     db_sess = db_session.create_session()
@@ -55,7 +66,7 @@ def edit_deck(deck_id: int):
     return render_template('deck_edit.html', deck=deck)
 
 
-@app.route('/deck/<deck_id:int>/delete')
+@app.route('/deck/<int:deck_id>/delete')
 @login_required
 def delete_deck(deck_id: int):
     db_sess = db_session.create_session()
