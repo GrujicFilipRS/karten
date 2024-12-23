@@ -10,3 +10,12 @@ class Card(SqlAlchemyBase):
     position = Column(Integer, nullable=False)
     front = Column(String, nullable=False)
     back = Column(String, nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'deck_id': self.deck_id,
+            'position': self.position,
+            'front': self.front,
+            'back': self.back
+        }
