@@ -60,9 +60,11 @@ function updateVisible()
 
         let deckEdited = document.getElementById(`my-deck${i+1}`);
         deckEdited.children[0].innerHTML = myDeck['name'];
+        deckEdited.children[1].innerHTML = myDeck['description'];
 
         deckEdited = document.getElementById(`other-deck${i+1}`);
         deckEdited.children[0].innerHTML = otherDeck['name'];
+        deckEdited.children[1].innerHTML = otherDeck['description'];
     }
 
     return [myDecks, otherDecks];
