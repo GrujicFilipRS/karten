@@ -46,6 +46,7 @@ def view_deck(deck_id: int):
     cards_json = [card.to_dict() for card in cards]
     deck_dict = {
         "deck_name": deck.name,
+        "description": deck.description,
         "user_created_name": user_created.username,
         "time_changed": deck.time_changed,
         "cards": cards_json

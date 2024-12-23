@@ -9,4 +9,5 @@ class Deck(SqlAlchemyBase):
     id = Column(Integer, primary_key=True)
     user_created_id = Column(Integer, ForeignKey("user.id"))
     name = Column(String, nullable=False)
+    description = Column(String, nullable=True)
     time_changed = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
