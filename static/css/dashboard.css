@@ -204,6 +204,18 @@ nav {
     cursor: pointer;
 }
 
+.control button:disabled {
+    border: 1px solid #696969;
+    color: #696969;
+}
+
+.control button:disabled:hover {
+    border: 1px solid #696969;
+    color: #696969;
+    background-color: #1f1f21;
+    cursor: default;
+}
+
 @media (max-width: 1400px) {
     .deck3 {
         display: none;

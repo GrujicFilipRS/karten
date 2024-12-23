@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../static/js/deck.js" defer></script>
     <script src="../static/js/dashboard.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +36,7 @@
     </div>
 
     <div class="my-decks-list">
-        <div class="deck deck1">
+        <div class="deck deck1" id="my-deck1">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
@@ -48,7 +49,7 @@
             </div>
         </div>
 
-        <div class="deck deck2">
+        <div class="deck deck2" id="my-deck2">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
@@ -61,7 +62,7 @@
             </div>
         </div>
 
-        <div class="deck deck3">
+        <div class="deck deck3" id="my-deck3">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
@@ -77,7 +78,7 @@
         <!-- Display only if user has more decks than the visible amount supports -->
         <div class="controls">
             <div class="control c-left">
-                <button onclick="goleft_mine()">
+                <button onclick="goleft_mine()" id="my-c-left">
                     &larr;
                 </button>
             </div>
@@ -96,7 +97,7 @@
     </div>
 
     <div class="my-decks-list other-decks-list">
-        <div class="deck deck1">
+        <div class="deck deck1" id="other-deck1">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
@@ -106,7 +107,7 @@
             </div>
         </div>
 
-        <div class="deck deck2">
+        <div class="deck deck2" id="other-deck2">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
@@ -116,7 +117,7 @@
             </div>
         </div>
 
-        <div class="deck deck3">
+        <div class="deck deck3" id="other-deck3">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
@@ -129,13 +130,13 @@
         <!-- Display only if user has more decks than the visible amount supports -->
         <div class="controls">
             <div class="control c-left">
-                <button onclick="goleft_mine()">
+                <button onclick="goleft_other()" id="other-c-left">
                     &larr;
                 </button>
             </div>
 
             <div class="control c-right">
-                <button onclick="goright_mine()">
+                <button onclick="goright_other()">
                     &rarr;
                 </button>
             </div>
