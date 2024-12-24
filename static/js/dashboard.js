@@ -70,7 +70,7 @@ function updateVisible()
     return [myDecks, otherDecks];
 }
 
-updateVisible();
+//!updateVisible(); uncomment once done with implementation of deck class and back-front comms
 
 function goleft_mine() {
     firstCarouselIndex--;
