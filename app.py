@@ -48,6 +48,7 @@ def view_deck(deck_id: int):
         "deck_name": deck.name,
         "user_created_name": user_created.username,
         "time_changed": deck.time_changed,
+        "description": deck.description,
         "cards": cards_json
     }
 
