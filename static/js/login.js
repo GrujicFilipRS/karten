@@ -10,6 +10,8 @@ pwdInput.addEventListener('input', function() {
     onInputChange();
 });
 
+loginBtn.disabled = true;
+
 function onInputChange() {
     if (usernameInput.value == '' || pwdInput.value == '') {
         loginBtn.disabled = true;
