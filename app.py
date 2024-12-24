@@ -31,7 +31,7 @@ def index():
     user_decks = db_sess.query(Deck).filter(Deck.user_created_id == current_user.id).all()
     other_decks = db_sess.query(Deck).filter(Deck.user_created_id != current_user.id).all()
     user_decks_dicts = [deck.to_dict() for deck in user_decks]
-    other_decks_dicts = [deck.to_dict() for deck in user_decks]
+    other_decks_dicts = [deck.to_dict() for deck in other_decks]
 
     return render_template(
         'dashboard.html',
