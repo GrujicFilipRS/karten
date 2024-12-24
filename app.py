@@ -35,7 +35,7 @@ def index():
 
     return render_template(
         'dashboard.html',
-        user=current_user.username,
+        user=current_user.id,
         user_decks=user_decks_dicts,
         other_decks=other_decks_dicts
     )

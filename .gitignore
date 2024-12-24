@@ -4,3 +4,4 @@ db/
 config/__pycache__/
 forms/__pycache__/
 data/__pycache__/
+db/library.sqlite
