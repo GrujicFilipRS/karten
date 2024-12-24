@@ -26,7 +26,19 @@ def load_user(user_id):
 def index():
     if not current_user.is_authenticated:
         return render_template('index.html')
-    return render_template('dashboard.html', user=current_user.username)
+
+    db_sess = db_session.create_session()
+    user_decks = db_sess.query(Deck).filter(Deck.user_created_id == current_user.id).all()
+    other_decks = db_sess.query(Deck).filter(Deck.user_created_id != current_user.id).all()
+    user_decks_dicts = [deck.to_dict() for deck in user_decks]
+    other_decks_dicts = [deck.to_dict() for deck in user_decks]
+
+    return render_template(
+        'dashboard.html',
+        user=current_user.username,
+        user_decks=user_decks_dicts,
+        other_decks=other_decks_dicts
+    )
 
 
 # TODO: deck to json function
