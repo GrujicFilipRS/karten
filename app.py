@@ -30,7 +30,6 @@ def index():
 
 
 # TODO: deck to json function
-# //ok i'll do it :)
 
 @app.route('/deck/<int:deck_id>')
 def view_deck(deck_id: int):
@@ -38,36 +37,14 @@ def view_deck(deck_id: int):
     deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
 
     if not deck:
-        return "-1"  # //the legendary error :cold_face: :skull:
+        return "-1"
 
-    user_created = db_sess.query(User).filter(
-        User.id == deck.user_created_id).first()
-    cards = db_sess.query(Card).filter(Card.deck_id == deck.id).all()
-    cards_json = [card.to_dict() for card in cards]
-    deck_dict = {
-        "deck_name": deck.name,
-        "user_created_name": user_created.username,
-        "time_changed": deck.time_changed,
-        "description": deck.description,
-        "cards": cards_json
-    }
-
-    # //made by @yxzhin with <3
-    # //#hellokittysupremacy #finelcomeback #yxzhinsave
+    deck_dict = deck.to_dict()
 
     if request.args.get("secret") == config.BOT_SECRET:
-
-        # //converting datetime objects because they're not json serializable
-
-        time_changed: datetime = deck_dict["time_changed"]
-        y, mt, d, h, mn, s, ms = time_changed.year, time_changed.month, time_changed.day, time_changed.hour, time_changed.minute, time_changed.second, time_changed.microsecond
-        deck_dict["time_changed"] = fr"{y}-{mt}-{d} {h}-{mn}-{s}-{ms}"
-
         return json_dumps(deck_dict)
 
     return render_template("view_deck.html", deck=deck_dict)
-
-    # //end of my part
 
 
 @app.route('/deck/<int:deck_id>/edit')
