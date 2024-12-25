@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search results: {{ search_text }}</title>
+</head>
+<body>
+    <h1>{{ search_text }}</h1>
+    {% if not search_results %}
+        <p>Nothing is found</p>
+    {% endif %}
+    {% for deck in search_results %}
+        {% set deck_dict = deck.to_dict() %}
+        <p><a href="/deck/{{ deck.id }}">{{ deck_dict["deck_name"] }}</a> ({{ deck_dict["user_created_name"] }}) -
+            {{ deck_dict["description"] }} ({{ deck_dict["cards"] | length }} cards)</p>
+    {% endfor %}
+</body>
+</html>

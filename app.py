@@ -1,16 +1,21 @@
 from flask import Flask, redirect, render_template, request, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from json import dumps as json_dumps
+import nltk
+
 from data import db_session
 from data.__all_models import User, Deck, Card
 from forms.user import UserLogInForm, UserSignUpForm
 from config import config
-from json import dumps as json_dumps
-from datetime import datetime
+from tools import nlp
+
+nltk.download('punkt_tab', quiet=True)
 
 template_dir = "templates"
 static_dir = "static"
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.config['SECRET_KEY'] = config.SECRET_KEY
+app.tokens_index = {}
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -144,6 +149,34 @@ def signup_page():
     return render_template('signup.html', sign_up_form=sign_up_form)
 
 
+@app.route('/search/<string:search_text>', methods=["GET", "POST"])
+def search(search_text: str):
+    ids = []
+    search_token = nlp.tokenize(search_text)
+
+    for deck_id, token in app.tokens_index.items():
+        num_matching_words = len(search_token & token)
+        if num_matching_words > 0:
+            ids.append((deck_id, num_matching_words))
+
+    ids.sort(key=lambda x: x[1], reverse=True)
+    ids = [i[0] for i in ids]
+
+    db_sess = db_session.create_session()
+    search_results = db_sess.query(Deck).filter(Deck.id.in_(ids)).all()
+    return render_template(
+        "search.html",
+        search_results=search_results,
+        search_text=search_text,
+        title="Search results"
+    )
+
+
 if __name__ == '__main__':
     db_session.global_init("db/karten.sqlite")
+
+    db_sess = db_session.create_session()
+    decks = db_sess.query(Deck).all()
+    app.tokens_index = {deck.id: nlp.tokenize(deck.name) for deck in decks}
+
     app.run(debug=True, threaded=True)
