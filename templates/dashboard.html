@@ -18,7 +18,7 @@
         <button class="user-btn" onclick="toggleNavBar()"><img src="../static/img/user.png"></button>
     </nav>
 
-    <div class="nav-btns" id="nav-btns" style="display:none;">
+    <div class="nav-btns" id="nav-btns" style="display: none">
         <a href="/"><button>
             <p>Dashboard</p>
             <img src="../static/img/dashboard.png">
@@ -32,61 +32,42 @@
 
     <div class="my-decks-skibidi">
         <p>My decks</p>
-        <a href="/add-deck"><button>+</button></a>
+        <a href="/add_deck"><button>+</button></a>
     </div>
 
-    <div class="my-decks-list">
-        <div class="deck deck1" id="my-deck1">
+    <div class="my-decks-list" id="my-decks-list">
+        <div class="deck" id="my-deck1" style="display: none">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>
-                    Practice
-                </button></a>
-                <a href="/edit/deck-id" class="edit-btn"><button>
-                    Edit
-                </button></a>
+                <a href="/deck/deck-id" class="practice-btn"><button>Practice</button></a>
+                <a href="/edit/deck-id" class="edit-btn"><button>Edit</button></a>
             </div>
         </div>
-
-        <div class="deck deck2" id="my-deck2">
+        <div class="deck" id="my-deck2" style="display: none">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>
-                    Practice
-                </button></a>
-                <a href="/edit/deck-id" class="edit-btn"><button>
-                    Edit
-                </button></a>
+                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
+                <a href="/edit/deck-id" class="edit-btn"><button>Edit</button></a>
             </div>
         </div>
-
-        <div class="deck deck3" id="my-deck3">
+        <div class="deck" id="my-deck3" style="display: none">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>
-                    Practice
-                </button></a>
-                <a href="/edit/deck-id" class="edit-btn"><button>
-                    Edit
-                </button></a>
+                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
+                <a href="/edit/deck-id" class="edit-btn"><button>Edit</button></a>
             </div>
         </div>
 
         <!-- Display only if user has more decks than the visible amount supports -->
-        <div class="controls">
+        <div class="controls" id="my-decks-controls" style="display: none">
             <div class="control c-left">
-                <button onclick="goleft_mine()" id="my-c-left">
-                    &larr;
-                </button>
+                <button onclick="goleft_mine()" id="my-c-left">&larr;</button>
             </div>
-
             <div class="control c-right">
-                <button onclick="goright_mine()">
-                    &rarr;
-                </button>
+                <button onclick="goright_mine()" id="my-c-right">&rarr;</button>
             </div>
         </div>
     </div>
@@ -96,49 +77,36 @@
         <a href="/add-other-deck"><button>+</button></a>
     </div>
 
-    <div class="my-decks-list other-decks-list">
-        <div class="deck deck1" id="other-deck1">
+    <div class="my-decks-list" id="other-decks-list">
+        <div class="deck" id="other-deck1" style="display: none">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>
-                    Practice
-                </button></a>
+                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
             </div>
         </div>
-
-        <div class="deck deck2" id="other-deck2">
+        <div class="deck" id="other-deck2" style="display: none">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>
-                    Practice
-                </button></a>
+                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
             </div>
         </div>
-
-        <div class="deck deck3" id="other-deck3">
+        <div class="deck" id="other-deck3" style="display: none">
             <p class="title">Title</p>
             <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
             <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>
-                    Practice
-                </button></a>
+                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
             </div>
         </div>
 
         <!-- Display only if user has more decks than the visible amount supports -->
-        <div class="controls">
+        <div class="controls" id="other-decks-controls" style="display: none">
             <div class="control c-left">
-                <button onclick="goleft_other()" id="other-c-left">
-                    &larr;
-                </button>
+                <button onclick="goleft_other()" id="other-c-left">&larr;</button>
             </div>
-
             <div class="control c-right">
-                <button onclick="goright_other()">
-                    &rarr;
-                </button>
+                <button onclick="goright_other()" id="other-c-right">&rarr;</button>
             </div>
         </div>
     </div>

@@ -17,122 +17,98 @@ let secondCarouselIndex = 0;
 function logicForResizing() {
     if (window.innerWidth > 1400) {
         visibleDeckAmount = 3;
-    }
-    else if (window.innerWidth > 995) {
+    } else if (window.innerWidth > 995) {
         visibleDeckAmount = 2;
-    }
-    else {
+    } else {
         visibleDeckAmount = 1;
     }
 
-    if (myDecks.length <= visibleDeckAmount)
-        document.getElementsByClassName('controls')[0].style['display'] = 'none';
-    else
-        document.getElementsByClassName('controls')[0].style['display'] = 'flex';
-
-    if (otherDecks.length <= visibleDeckAmount)
-        document.getElementsByClassName('controls')[1].style['display'] = 'none';
-    else
-        document.getElementsByClassName('controls')[1].style['display'] = 'flex';
-}
-
-// Displaying of none to decks that don't exist because len(myDecks) or len(otherDecks) is too small
-if (myDecks.length <= 2) {
-    document.getElementsByClassName('deck3')[0].style['display'] = 'none';
-}
-
-if (myDecks.length <= 1) {
-    document.getElementsByClassName('deck2')[0].style['display'] = 'none';
-    document.getElementsByClassName('controls')[0].style['display'] = 'none';
-}
-
-if(myDecks.length == 0) {
-    document.getElementsByClassName('deck1')[0].style['display'] = 'none';
-}
-
-if (otherDecks.length <= 2) {
-    document.getElementsByClassName('deck3')[1].style['display'] = 'none';
-}
-
-if (otherDecks.length <= 1) {
-    document.getElementsByClassName('deck2')[1].style['display'] = 'none';
-    document.getElementsByClassName('controls')[1].style['display'] = 'none';
-}
-
-if(otherDecks.length == 0) {
-    document.getElementsByClassName('deck1')[1].style['display'] = 'none';
+    updateVisible();
 }
 
 // Updates the visible decks onto the carousel
-function updateVisible()
-{
-    // Disable the left button if index is 0 to prevent indexing issues
-    if (firstCarouselIndex == 0) {
-        document.getElementById('my-c-left').disabled = true;
+function updateVisible() {
+    let myDecksToShow = myDecks.slice(firstCarouselIndex, firstCarouselIndex + visibleDeckAmount);
+    let otherDecksToShow = otherDecks.slice(secondCarouselIndex, secondCarouselIndex + visibleDeckAmount);
+
+    // Show/hide controls if necessary
+    const myDecksControls = document.getElementById('my-decks-controls');
+    const otherDecksControls = document.getElementById('other-decks-controls');
+
+    if (myDecks.length > visibleDeckAmount) {
+        myDecksControls.style.display = 'flex';
     } else {
-        document.getElementById('my-c-left').disabled = false;
+        myDecksControls.style.display = 'none';
     }
 
-    if (secondCarouselIndex == 0) {
-        document.getElementById('other-c-left').disabled = true;
+    if (otherDecks.length > visibleDeckAmount) {
+        otherDecksControls.style.display = 'flex';
     } else {
-        document.getElementById('other-c-left').disabled = false;
+        otherDecksControls.style.display = 'none';
     }
 
-    // Gathering both of the decklists to display on the carousel
-    let myDecksToShow = [];
-    for(let i = firstCarouselIndex; i < visibleDeckAmount + firstCarouselIndex; i++) {
-        myDecksToShow.push(myDecks[i % myDecks.length]);
-    }
-
-    let otherDecksToShow = [];
-    for(let i = secondCarouselIndex; i < visibleDeckAmount + secondCarouselIndex; i++) {
-        otherDecksToShow.push(otherDecks[i % otherDecks.length]);
-    }
-
-    // Displaying the decks
+    // Show decks and update buttons
     for (let i = 0; i < visibleDeckAmount; i++) {
-        myDeck = myDecksToShow[i];
-        otherDeck = otherDecksToShow[i];
-        
-        // Try block is here in case of the user having less than visibleDeckAmount number of decks
-        try {
-            let deckEdited = document.getElementById(`my-deck${i+1}`);
-            deckEdited.children[0].innerHTML = myDeck['deck_name'];
-            deckEdited.children[1].innerHTML = myDeck['description'];
-    
-            deckEdited = document.getElementById(`other-deck${i+1}`);
-            deckEdited.children[0].innerHTML = otherDeck['deck_name'];
-            deckEdited.children[1].innerHTML = otherDeck['description'];
+        let myDeck = myDecksToShow[i];
+        let otherDeck = otherDecksToShow[i];
+
+        // Show the decks if they exist
+        let myDeckElement = document.getElementById(`my-deck${i + 1}`);
+        let otherDeckElement = document.getElementById(`other-deck${i + 1}`);
+
+        if (myDeck) {
+            myDeckElement.style.display = 'block';
+            myDeckElement.querySelector('.title').innerHTML = myDeck.deck_name;
+            myDeckElement.querySelector('.desc').innerHTML = myDeck.description;
+        } else {
+            myDeckElement.style.display = 'none';
         }
-        catch(e) {
-            console.log(`Error caught: ${e}`)
+
+        if (otherDeck) {
+            otherDeckElement.style.display = 'block';
+            otherDeckElement.querySelector('.title').innerHTML = otherDeck.deck_name;
+            otherDeckElement.querySelector('.desc').innerHTML = otherDeck.description;
+        } else {
+            otherDeckElement.style.display = 'none';
         }
     }
 
-    return [myDecks, otherDecks];
+    // Disable/enable carousel navigation buttons
+    document.getElementById('my-c-left').disabled = firstCarouselIndex <= 0;
+    document.getElementById('my-c-right').disabled = firstCarouselIndex + visibleDeckAmount >= myDecks.length;
+
+    document.getElementById('other-c-left').disabled = secondCarouselIndex <= 0;
+    document.getElementById('other-c-right').disabled = secondCarouselIndex + visibleDeckAmount >= otherDecks.length;
 }
 
-updateVisible();
-
 function goleft_mine() {
-    firstCarouselIndex--;
-    console.log(updateVisible());
+    if (firstCarouselIndex > 0) {
+        firstCarouselIndex--;
+        updateVisible();
+    }
 }
 
 function goright_mine() {
-    firstCarouselIndex++;
-    console.log(updateVisible());
+    if (firstCarouselIndex + visibleDeckAmount < myDecks.length) {
+        firstCarouselIndex++;
+        updateVisible();
+    }
 }
 
 function goleft_other() {
-    secondCarouselIndex--;
-    console.log(updateVisible());
+    if (secondCarouselIndex > 0) {
+        secondCarouselIndex--;
+        updateVisible();
+    }
 }
 
 function goright_other() {
-    secondCarouselIndex++;
-    console.log(updateVisible());
+    if (secondCarouselIndex + visibleDeckAmount < otherDecks.length) {
+        secondCarouselIndex++;
+        updateVisible();
+    }
 }
 
 window.onresize = logicForResizing;
+
+updateVisible();
