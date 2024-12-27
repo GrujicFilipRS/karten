@@ -22,6 +22,7 @@ class Deck(SqlAlchemyBase):
         cards_json = [card.to_dict() for card in cards]
 
         deck_dict = {
+            "deck_id": self.id,
             "deck_name": self.name,
             "user_created_name": user_created.username,
             "time_changed": self.time_changed.strftime("%Y-%m-%d %H:%M:%S"),
