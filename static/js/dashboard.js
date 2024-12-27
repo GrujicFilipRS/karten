@@ -100,10 +100,12 @@ function updateVisible()
             let deckEdited = document.getElementById(`my-deck${i+1}`);
             deckEdited.children[0].innerHTML = myDeck['deck_name'];
             deckEdited.children[1].innerHTML = myDeck['description'];
+            deckEdited.children[2].children[0].setAttribute('href', `./deck/${myDeck['deck_id']}`);
     
             deckEdited = document.getElementById(`other-deck${i+1}`);
             deckEdited.children[0].innerHTML = otherDeck['deck_name'];
             deckEdited.children[1].innerHTML = otherDeck['description'];
+            deckEdited.children[2].children[0].setAttribute('href', `./deck/${otherDeck['deck_id']}`);
         }
         catch(e) {
             console.log(`Error caught: ${e}`)
