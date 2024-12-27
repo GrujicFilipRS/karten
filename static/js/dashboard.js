@@ -60,7 +60,8 @@ function updateVisible() {
             myDeckElement.style.display = 'block';
             myDeckElement.querySelector('.title').innerHTML = myDeck.deck_name;
             myDeckElement.querySelector('.desc').innerHTML = myDeck.description;
-            myDeckElement.setAttribute('href', `./deck/${myDeck.deck_id}`);
+            myDeckElement.querySelector('.deck-btns .practice-btn').setAttribute('href', `./deck/${myDeck.deck_id}`);
+            myDeckElement.querySelector('.deck-btns .edit-btn').setAttribute('href', `./deck/${myDeck.deck_id}/edit`);
         } else {
             myDeckElement.style.display = 'none';
         }
@@ -69,7 +70,7 @@ function updateVisible() {
             otherDeckElement.style.display = 'block';
             otherDeckElement.querySelector('.title').innerHTML = otherDeck.deck_name;
             otherDeckElement.querySelector('.desc').innerHTML = otherDeck.description;
-            otherDeckElement.setAttribute('href', `./deck/${otherDeck.deck_id}`);
+            otherDeckElement.querySelector('.deck-btns .practice-btn').setAttribute('href', `./deck/${otherDeck.deck_id}`);
         } else {
             otherDeckElement.style.display = 'none';
         }
