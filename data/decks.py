@@ -27,7 +27,7 @@ class Deck(SqlAlchemyBase):
             "deck_name": self.name,
             "user_created_name": user_created.username,
             "time_changed": self.time_changed.strftime("%Y-%m-%d %H:%M:%S"),
-            "description": self.description,
+            "description": self.description if self.description is not None else "No description",
             "cards": cards_json
         }
         return deck_dict
