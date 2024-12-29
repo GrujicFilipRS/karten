@@ -20,6 +20,7 @@ class Deck(SqlAlchemyBase):
         user_created = db_sess.query(User).filter(User.id == self.user_created_id).first()
         cards = db_sess.query(Card).filter(Card.deck_id == self.id).all()
         cards_json = [card.to_dict() for card in cards]
+        db_sess.close()
 
         deck_dict = {
             "deck_id": self.id,

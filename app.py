@@ -24,7 +24,9 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
-    return db_sess.query(User).get(user_id)
+    user = db_sess.query(User).get(user_id)
+    db_sess.close()
+    return user
 
 
 @app.route('/')
@@ -37,6 +39,7 @@ def index():
     other_decks = db_sess.query(Deck).filter(Deck.user_created_id != current_user.id).all()
     user_decks_dicts = [deck.to_dict() for deck in user_decks]
     other_decks_dicts = [deck.to_dict() for deck in other_decks]
+    db_sess.close()
 
     return render_template(
         'dashboard.html',
@@ -46,12 +49,11 @@ def index():
     )
 
 
-# TODO: deck to json function
-
 @app.route('/deck/<int:deck_id>')
 def view_deck(deck_id: int):
     db_sess = db_session.create_session()
     deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
+    db_sess.close()
 
     if not deck:
         return "-1"
@@ -70,6 +72,7 @@ def edit_deck(deck_id: int):
     db_sess = db_session.create_session()
     deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
     user = db_sess.query(User).filter(User.id == deck.user_created_id).first()
+    db_sess.close()
     if user.id != current_user.id:
         flash('You do not have permission to edit this deck.')
         return redirect(f'/deck/{deck_id}')
@@ -91,6 +94,7 @@ def delete_deck(deck_id: int):
     db_sess = db_session.create_session()
     deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
     user = db_sess.query(User).filter(User.id == deck.user_created_id).first()
+    db_sess.close()
     if user.id != current_user.id:
         flash('You do not have permission to edit this deck.')
         return redirect(f'/deck/{deck_id}')
@@ -106,8 +110,7 @@ def login_page():
     login_form = UserLogInForm()
     if login_form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(
-            User.username == login_form.username.data).first()
+        user = db_sess.query(User).filter(User.username == login_form.username.data).first()
         if not (user and user.check_password(login_form.password.data)):
             return render_template(
                 "login.html",
@@ -115,6 +118,7 @@ def login_page():
                 message="false_mail_or_password"
             )
         login_user(user, remember=login_form.remember_me.data)
+        db_sess.close()
         return redirect("/")
     return render_template("login.html", login_form=login_form)
 
@@ -145,6 +149,7 @@ def signup_page():
         db_sess.add(user)
         db_sess.commit()
         login_user(user)
+        db_sess.close()
         return redirect('/')
     return render_template('signup.html', sign_up_form=sign_up_form)
 
@@ -164,12 +169,14 @@ def search(search_text: str):
 
     db_sess = db_session.create_session()
     search_results = db_sess.query(Deck).filter(Deck.id.in_(ids)).all()
+    db_sess.close()
     return render_template(
         "search.html",
         search_results=search_results,
         search_text=search_text,
         title="Search results"
     )
+
 
 @app.route('/search', methods=['GET'])
 def search_ui():
