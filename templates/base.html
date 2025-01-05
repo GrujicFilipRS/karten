@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <script src="{{ url_for('static', filename='js/base.js') }}" defer></script>
+    <title>Karten - {{ title }}</title>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <p class="title">{{ title }}</p>
+        <button class="user-btn" onclick="toggleNavBar()">
+            <img src="{{ url_for('static', filename='img/user.png') }}" alt="User Icon">
+        </button>
+    </nav>
+
+    <div class="nav-btns" id="nav-btns" style="display: none">
+        <a href="/"><button>
+            Dashboard
+            <img src="{{ url_for('static', filename='img/dashboard.png') }}" alt="Dashboard Icon">
+        </button></a>
+
+        <a href="/logout"><button class="logout-btn">
+            Log out
+            <img src="{{ url_for('static', filename='img/logout.png') }}" alt="Logout Icon">
+        </button></a>
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,35 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../static/js/deck.js" defer></script>
-    <script src="../static/js/dashboard.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/base.css">
-    <link rel="stylesheet" href="../static/css/dashboard.css">
-    <title>Karten - Dashboard</title>
-</head>
+{% extends 'base.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="{{ url_for('static', filename='js/deck.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
 <body>
-    <nav>
-        <p class="title">Card Dashboard</p>
-        <button class="user-btn" onclick="toggleNavBar()"><img src="../static/img/user.png"></button>
-    </nav>
-
-    <div class="nav-btns" id="nav-btns" style="display: none">
-        <a href="/"><button>
-            <p>Dashboard</p>
-            <img src="../static/img/dashboard.png">
-        </button></a>
-
-        <a href="/logout"><button class="logout-btn">
-            <p>Log out</p>
-            <img src="../static/img/logout.png">
-        </button></a>
-    </div>
-
     <div class="my-decks-skibidi">
         <p>My decks</p>
         <a href="/add_deck"><button>+</button></a>
@@ -119,4 +97,4 @@
         <div id="other-decks-info" data="{{ other_decks }}"></div>
     </div>
 </body>
-</html>
+{% endblock %}

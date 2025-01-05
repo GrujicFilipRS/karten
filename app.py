@@ -42,7 +42,8 @@ def index():
     db_sess.close()
 
     return render_template(
-        'dashboard.html',
+        "dashboard.html",
+        title="Dashboard",
         user=current_user.id,
         user_decks=user_decks_dicts,
         other_decks=other_decks_dicts
@@ -99,13 +100,13 @@ def delete_deck(deck_id: int):
         flash('You do not have permission to edit this deck.')
         return redirect(f'/deck/{deck_id}')
     db_sess.delete(deck)
-    return redirect('/dashboard')
+    return redirect('/')
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login_page():
     if current_user.is_authenticated:
-        return redirect('/dashboard')
+        return redirect('/')
 
     login_form = UserLogInForm()
     if login_form.validate_on_submit():
@@ -133,7 +134,7 @@ def logout():
 @app.route('/signup', methods=["GET", "POST"])
 def signup_page():
     if current_user.is_authenticated:
-        return redirect('/dashboard')
+        return redirect('/')
 
     sign_up_form = UserSignUpForm()
     if sign_up_form.validate_on_submit():
@@ -174,7 +175,7 @@ def search(search_text: str):
         "search.html",
         search_results=search_results,
         search_text=search_text,
-        title="Search results"
+        title=f"Search results: {search_text}"
     )
 
 

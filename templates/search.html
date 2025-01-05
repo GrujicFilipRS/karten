@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Karten - {{ search_text }}</title>
-</head>
+{% extends 'base.html' %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+{% endblock %}
+
+{% block content %}
 <body>
-    <h1>{{ search_text }}</h1>
     {% if not search_results %}
-        <p>Nothing is found</p>
+        <p>Nothing found under "{{ search_text }}"</p>
+    {% else %}
+        <div class="search-results">
+            {% for deck in search_results %}
+                {% set deck_dict = deck.to_dict() %}
+                <div class="deck">
+                    <p style="color:white">
+                        <a href="/deck/{{ deck.id }}">{{ deck_dict["deck_name"] }}</a>
+                        ({{ deck_dict["user_created_name"] }}) - 
+                        {{ deck_dict["description"] }} 
+                        ({{ deck_dict["cards"] | length }} cards)
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
-    {% for deck in search_results %}
-        {% set deck_dict = deck.to_dict() %}
-        <p><a href="/deck/{{ deck.id }}">{{ deck_dict["deck_name"] }}</a> ({{ deck_dict["user_created_name"] }}) -
-            {{ deck_dict["description"] }} ({{ deck_dict["cards"] | length }} cards)</p>
-    {% endfor %}
 </body>
-</html>
+{% endblock %}
