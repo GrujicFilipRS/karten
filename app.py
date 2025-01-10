@@ -4,7 +4,7 @@ from json import dumps as json_dumps
 import nltk
 
 from data import db_session
-from data.__all_models import User, Deck, Card
+from data.__all_models import User, Deck, Card, SavedDeck
 from forms.user import UserLogInForm, UserSignUpForm
 from config import config
 from tools import nlp
