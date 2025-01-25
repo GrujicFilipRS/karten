@@ -8,6 +8,7 @@ from data.__all_models import User, Deck, Card, SavedDeck
 from forms.user import UserLogInForm, UserSignUpForm
 from config import config
 from tools import nlp
+from api.routes import api_bp
 
 nltk.download('punkt_tab', quiet=True)
 
@@ -16,6 +17,7 @@ static_dir = "static"
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.config['SECRET_KEY'] = config.SECRET_KEY
 app.tokens_index = {}
+app.register_blueprint(api_bp, url_prefix='/api')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
