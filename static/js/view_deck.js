@@ -1,8 +1,49 @@
-// Sample cards data sent by Jinja as JSON
+const addToLibrary = document.getElementById("add-to-library");
+const addOrRemoveDeckButton = document.getElementById("button-add-remove-deck");
+const buttonText = document.getElementById("add-remove-deck-button-text")
+const feedback = document.getElementById("feedback-add-remove-deck-button");
 
+addButtonPreload()
 let currentIndex = 0;
 
-// Function to update the card content
+
+// Event listener for card click to flip it
+document.getElementById("flashcard").addEventListener("click", flipCard);
+
+
+// Adding or deleting the deck from user's library
+addToLibrary.addEventListener("click", createOrDeleteSavedDeck);
+
+// Event listener for card flipping
+document.addEventListener("keydown", function(event) {
+  if (event.key === " ") {
+    flipCard();
+  }
+});
+
+// Event listeners for navigation buttons
+document.getElementById("nextButton").addEventListener("click", nextCard);
+document.getElementById("prevButton").addEventListener("click", prevCard);
+
+// Initialize the first card
+updateCard();
+
+
+async function addButtonPreload() {
+    if (!isMyDeck) {
+        addToLibrary.style.display = "block";
+
+        const savedDeck = await getSavedDeck(currentUserId, deckId);
+        if (!savedDeck.error) {
+            buttonText.textContent = savedDeck.data
+                ? "Remove from Library"
+                : "Add to Library";
+        }
+    }
+}
+
+
+// Function for card's content updating
 function updateCard() {
   const frontSide = document.getElementById("front-side");
   const backSide = document.getElementById("back-side");
@@ -24,15 +65,6 @@ function flipCard() {
   card.classList.toggle("flipped");
 }
 
-// Event listener for card click to flip it
-document.getElementById("flashcard").addEventListener("click", flipCard);
-
-document.addEventListener("keydown", function(event) {
-  if (event.key === " ") {
-    flipCard();
-  }
-});
-
 // Function to move to the next card
 function nextCard() {
   if (currentIndex < cards.length - 1) {
@@ -44,6 +76,7 @@ function nextCard() {
     setTimeout(function() {card.style.transition = "transform 0.6s";}, 50);
   }
 }
+
 
 // Function to move to the previous card
 function prevCard() {
@@ -57,9 +90,126 @@ function prevCard() {
   }
 }
 
-// Event listeners for navigation buttons
-document.getElementById("nextButton").addEventListener("click", nextCard);
-document.getElementById("prevButton").addEventListener("click", prevCard);
+async function createOrDeleteSavedDeck() {
+    if (!isMyDeck){
+        try {
+            const savedDeck = await getSavedDeck(currentUserId, deckId);
 
-// Initialize the first card
-updateCard();
+            if (savedDeck.error) {
+                console.warn(`${savedDeck.error}`)
+                console.error(`Error ${savedDeck.error} while getting SavedDeck: ${savedDeck.message}`);
+                return;
+            }
+
+            if (savedDeck.data) {
+                // If SavedDeck is found, delete it
+                console.log("SavedDeck found. Deleting it...", savedDeck.data);
+                requestResponse = await deleteSavedDeck(savedDeck.data.id);
+                console.log("SavedDeck successfully deleted..");
+            } else {
+                // If SavedDeck isn't found, add it
+                console.log("SavedDeck isn't found. Adding new one...");
+                requestResponse = await postSavedDeck(currentUserId, deckId);
+                console.log("SavedDeck successfully added.");
+            }
+
+            feedback.innerHTML = `<div class="alert alert-success">${requestResponse.message}</div>`;
+            buttonText.textContent = buttonText.textContent === "Add to Library"
+                ? "Remove from Library"
+                : "Add to Library";
+        }
+        catch (error) {
+            console.error("Error:", error);
+            feedback.innerHTML = `<div class="alert alert-danger">An error occurred. Please refresh page and try again.</div>`;
+        }
+    }
+}
+
+async function getSavedDeck(userId, deckId) {
+    try {
+        const url = new URL('/api/saved_deck', window.location.origin);
+        url.searchParams.append('user_id', userId);
+        url.searchParams.append('deck_id', deckId);
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 400) {
+            console.error("Error 400: Missing required parameter.");
+            return { error: 400, message: "Bad Request", data: null };
+        }
+        if (response.status === 200) {
+            const data = await response.json();
+            return { error: null, data };
+        }
+        if (response.status === 404) {
+            return { error: null, data: null };
+        }
+        if (response.status === 500) {
+            console.error("Error 500: API Server Error.");
+            return { error: 500, message: "Internal Server Error", data: null };
+        }
+
+    } catch (err) {
+        console.error("Request error: ", err);
+        return { error: 502, message: "Request Failed", data: null };
+    }
+}
+
+
+async function postSavedDeck(userId, deckId) {
+    try {
+        const url = new URL('/api/saved_deck', window.location.origin);
+        url.searchParams.append('user_id', userId);
+        url.searchParams.append('deck_id', deckId);
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        // Parse and return the response data
+        const requestResponse = await response.json();
+        return requestResponse;
+
+    } catch (error) {
+        console.error('Error adding saved deck:', error);
+        throw error;
+    }
+}
+
+
+async function deleteSavedDeck(savedDeckId) {
+    try {
+        const url = new URL('/api/saved_deck', window.location.origin);
+
+        url.searchParams.append('saved_deck_id', savedDeckId);
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        // Parse and return the response data
+        const requestResponse = await response.json();
+        return requestResponse;
+
+    } catch (error) {
+        console.error('Error deleting saved deck:', error);
+        throw error;
+    }
+}

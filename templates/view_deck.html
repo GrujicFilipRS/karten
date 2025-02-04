@@ -9,6 +9,13 @@
 </head>
 
 <body>
+<div id="add-to-library" style="display: none">
+    <button id="button-add-remove-deck" class="btn btn-primary">
+        <span id="add-remove-deck-button-text">Add to Library</span>
+    </button>
+    <div id="feedback-add-remove-deck-button"></div>
+</div>
+
 <div class="container">
     <button class="button button-left" id="prevButton" disabled>
         <span class="arrow">&#8592;</span>
@@ -33,7 +40,11 @@
 
 <script>
     const cards = {{ deck["cards"] | tojson }};
+    const deckId = {{ deck.deck_id }};
+    const currentUserId = {{ current_user.id }};
+    const isMyDeck = "{{ is_my_deck }}" == "True";
 </script>
+
 <script src="../static/js/view_deck.js"></script>
 
 </body>

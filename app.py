@@ -62,11 +62,16 @@ def view_deck(deck_id: int):
         return "-1"
 
     deck_dict = deck.to_dict()
+    is_my_deck = deck.user_created_id == current_user.id
 
     if request.args.get("secret") == config.BOT_SECRET:
         return json_dumps(deck_dict)
 
-    return render_template("view_deck.html", deck=deck_dict)
+    return render_template(
+        "view_deck.html",
+        deck=deck_dict,
+        is_my_deck=is_my_deck
+    )
 
 
 @app.route('/deck/<int:deck_id>/edit')
