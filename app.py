@@ -1,16 +1,14 @@
 from flask import Flask, redirect, render_template, request, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from json import dumps as json_dumps
-import nltk
 
 from data import db_session
 from data.__all_models import User, Deck, Card, SavedDeck
 from forms.user import UserLogInForm, UserSignUpForm
 from config import config
-from tools import nlp
+from tools import search
 from api.routes import api_bp
 
-nltk.download('punkt_tab', quiet=True)
 
 template_dir = "templates"
 static_dir = "static"
@@ -53,6 +51,7 @@ def index():
 
 
 @app.route('/deck/<int:deck_id>')
+@login_required
 def view_deck(deck_id: int):
     db_sess = db_session.create_session()
     deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
@@ -163,21 +162,11 @@ def signup_page():
 
 
 @app.route('/search/<string:search_text>', methods=["GET", "POST"])
-def search(search_text: str):
-    ids = []
-    search_token = nlp.tokenize(search_text)
-
-    for deck_id, token in app.tokens_index.items():
-        num_matching_words = len(search_token & token)
-        if num_matching_words > 0:
-            ids.append((deck_id, num_matching_words))
-
-    ids.sort(key=lambda x: x[1], reverse=True)
-    ids = [i[0] for i in ids]
-
+def search_decks(search_text: str):
     db_sess = db_session.create_session()
-    search_results = db_sess.query(Deck).filter(Deck.id.in_(ids)).all()
+    search_results = search.search_decks(search_text, app.tokens_index, db_sess)
     db_sess.close()
+
     return render_template(
         "search.html",
         search_results=search_results,
@@ -198,7 +187,7 @@ if __name__ == '__main__':
 
     sess = db_session.create_session()
     decks = sess.query(Deck).all()
-    app.tokens_index = {deck.id: nlp.tokenize(deck.name) for deck in decks}
+    app.tokens_index = {deck.id: search.tokenize(deck.name) for deck in decks}
     sess.close()
 
     app.run(debug=True, threaded=True)
