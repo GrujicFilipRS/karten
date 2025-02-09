@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, flash
+from flask import Flask, redirect, render_template, request, flash, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from json import dumps as json_dumps
 
@@ -6,11 +6,12 @@ from data import db_session
 from data.__all_models import User, Deck, Card, SavedDeck
 from forms.user import UserLogInForm, UserSignUpForm
 from config import config
-from tools import search
+from tools import search, deck_utils
 from api.routes import api_bp
 
 template_dir = "templates"
 static_dir = "static"
+
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.config['SECRET_KEY'] = config.SECRET_KEY
 app.tokens_index = {}
@@ -32,12 +33,20 @@ def load_user(user_id):
 def index():
     if not current_user.is_authenticated:
         return render_template('index.html')
+    return redirect(url_for('dashboard'))
 
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
     db_sess = db_session.create_session()
-    user_decks = db_sess.query(Deck).filter(Deck.user_created_id == current_user.id).all()
-    other_decks = db_sess.query(Deck).filter(Deck.user_created_id != current_user.id).all()
-    user_decks_dicts = [deck.to_dict() for deck in user_decks]
-    other_decks_dicts = [deck.to_dict() for deck in other_decks]
+
+    user_decks = deck_utils.get_user_decks(current_user.id, db_sess)
+    user_saved_decks = deck_utils.get_user_saved_decks(current_user.id, db_sess)
+
+    user_decks_dicts = deck_utils.decks_to_dict(user_decks)
+    user_saved_decks_dicts = deck_utils.decks_to_dict(user_saved_decks)
+
     db_sess.close()
 
     return render_template(
@@ -45,7 +54,7 @@ def index():
         title="Dashboard",
         user=current_user.id,
         user_decks=user_decks_dicts,
-        other_decks=other_decks_dicts
+        other_decks=user_saved_decks_dicts
     )
 
 
@@ -82,7 +91,7 @@ def edit_deck(deck_id: int):
     db_sess.close()
     if user.id != current_user.id:
         flash('You do not have permission to edit this deck.')
-        return redirect(f'/deck/{deck_id}')
+        return redirect(url_for('view_deck', deck_id=deck_id))
 
     # if request.method == 'POST':
     #     # TODO logic for getting the information about decks from js
@@ -104,15 +113,15 @@ def delete_deck(deck_id: int):
     db_sess.close()
     if user.id != current_user.id:
         flash('You do not have permission to edit this deck.')
-        return redirect(f'/deck/{deck_id}')
+        return redirect(url_for('view_deck', deck_id=deck_id))
     db_sess.delete(deck)
-    return redirect('/')
+    return redirect(url_for('dashboard'))
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login_page():
     if current_user.is_authenticated:
-        return redirect('/')
+        return redirect(url_for('dashboard'))
 
     login_form = UserLogInForm()
     if login_form.validate_on_submit():
@@ -126,7 +135,7 @@ def login_page():
             )
         login_user(user, remember=login_form.remember_me.data)
         db_sess.close()
-        return redirect("/")
+        return redirect(url_for('index'))
     return render_template("login.html", login_form=login_form)
 
 
@@ -134,13 +143,13 @@ def login_page():
 @login_required
 def logout():
     logout_user()
-    return redirect("/")
+    return redirect(url_for('index'))
 
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup_page():
     if current_user.is_authenticated:
-        return redirect('/')
+        return redirect(url_for('dashboard'))
 
     sign_up_form = UserSignUpForm()
     if sign_up_form.validate_on_submit():
@@ -157,7 +166,7 @@ def signup_page():
         db_sess.commit()
         login_user(user)
         db_sess.close()
-        return redirect('/')
+        return redirect(url_for('dashboard'))
     return render_template('signup.html', sign_up_form=sign_up_form)
 
 
