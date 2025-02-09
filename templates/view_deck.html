@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard Player</title>
-    <link rel="stylesheet" href="../static/css/view_deck.css">
-</head>
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view_deck.css') }}">
+{% endblock %}
 
-<body>
+{% block content %}
+
 <div class="container">
     <div class="card-header">
         <div class="deck-name" id="tit">
@@ -53,5 +50,4 @@
 
 <script src="../static/js/view_deck.js"></script>
 
-</body>
-</html>
+{% endblock %}

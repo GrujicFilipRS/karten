@@ -7,94 +7,118 @@
 {% endblock %}
 
 {% block content %}
-<body>
-    <div class="my-decks-skibidi">
-        <p>My decks</p>
-        <a href="/add_deck"><button>+</button></a>
-    </div>
+<div class="my-decks-skibidi">
+    <p>My decks</p>
+    <a href="/add_deck">
+        <button>+</button>
+    </a>
+</div>
 
-    <div class="my-decks-list" id="my-decks-list">
-        <div class="deck" id="my-deck1" style="display: none">
-            <p class="title">Title</p>
-            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <div class="deck-btns">
-                <a href="/deck/deck-id" class="practice-btn"><button>Practice</button></a>
-                <a href="/edit/deck-id" class="edit-btn"><button>Edit</button></a>
-            </div>
-        </div>
-        <div class="deck" id="my-deck2" style="display: none">
-            <p class="title">Title</p>
-            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
-                <a href="/edit/deck-id" class="edit-btn"><button>Edit</button></a>
-            </div>
-        </div>
-        <div class="deck" id="my-deck3" style="display: none">
-            <p class="title">Title</p>
-            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
-                <a href="/edit/deck-id" class="edit-btn"><button>Edit</button></a>
-            </div>
-        </div>
-
-        <!-- Display only if user has more decks than the visible amount supports -->
-        <div class="controls" id="my-decks-controls" style="display: none">
-            <div class="control c-left">
-                <button onclick="goleft_mine()" id="my-c-left">&larr;</button>
-            </div>
-            <div class="control c-right">
-                <button onclick="goright_mine()" id="my-c-right">&rarr;</button>
-            </div>
+<div class="my-decks-list" id="my-decks-list">
+    <div class="deck" id="my-deck1" style="display: none">
+        <p class="title">Title</p>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna.</p>
+        <div class="deck-btns">
+            <a href="/deck/deck-id" class="practice-btn">
+                <button>Practice</button>
+            </a>
+            <a href="/edit/deck-id" class="edit-btn">
+                <button>Edit</button>
+            </a>
         </div>
     </div>
-
-    <div class="my-decks-skibidi">
-        <p>Other decks</p>
-<!--        <a href="/add-other-deck"><button>+</button></a>-->
+    <div class="deck" id="my-deck2" style="display: none">
+        <p class="title">Title</p>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna.</p>
+        <div class="deck-btns">
+            <a href="/practice/deck-id" class="practice-btn">
+                <button>Practice</button>
+            </a>
+            <a href="/edit/deck-id" class="edit-btn">
+                <button>Edit</button>
+            </a>
+        </div>
     </div>
-
-    <div class="my-decks-list" id="other-decks-list">
-        <div class="deck" id="other-deck1" style="display: none">
-            <p class="title">Title</p>
-            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
-            </div>
-        </div>
-        <div class="deck" id="other-deck2" style="display: none">
-            <p class="title">Title</p>
-            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
-            </div>
-        </div>
-        <div class="deck" id="other-deck3" style="display: none">
-            <p class="title">Title</p>
-            <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <div class="deck-btns">
-                <a href="/practice/deck-id" class="practice-btn"><button>Practice</button></a>
-            </div>
-        </div>
-
-        <!-- Display only if user has more decks than the visible amount supports -->
-        <div class="controls" id="other-decks-controls" style="display: none">
-            <div class="control c-left">
-                <button onclick="goleft_other()" id="other-c-left">&larr;</button>
-            </div>
-            <div class="control c-right">
-                <button onclick="goright_other()" id="other-c-right">&rarr;</button>
-            </div>
+    <div class="deck" id="my-deck3" style="display: none">
+        <p class="title">Title</p>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna.</p>
+        <div class="deck-btns">
+            <a href="/practice/deck-id" class="practice-btn">
+                <button>Practice</button>
+            </a>
+            <a href="/edit/deck-id" class="edit-btn">
+                <button>Edit</button>
+            </a>
         </div>
     </div>
 
-    <div class="ahuet" style="height: 100px;"></div>
-
-    <div class="info">
-        <div id="user-id" data="{{ user }}"></div>
-        <div id="my-decks-info" data="{{ user_decks }}"></div>
-        <div id="other-decks-info" data="{{ other_decks }}"></div>
+    <!-- Display only if user has more decks than the visible amount supports -->
+    <div class="controls" id="my-decks-controls" style="display: none">
+        <div class="control c-left">
+            <button onclick="goleft_mine()" id="my-c-left">&larr;</button>
+        </div>
+        <div class="control c-right">
+            <button onclick="goright_mine()" id="my-c-right">&rarr;</button>
+        </div>
     </div>
-</body>
+</div>
+
+<div class="my-decks-skibidi">
+    <p>Other decks</p>
+    <!--        <a href="/add-other-deck"><button>+</button></a>-->
+</div>
+
+<div class="my-decks-list" id="other-decks-list">
+    <div class="deck" id="other-deck1" style="display: none">
+        <p class="title">Title</p>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna.</p>
+        <div class="deck-btns">
+            <a href="/practice/deck-id" class="practice-btn">
+                <button>Practice</button>
+            </a>
+        </div>
+    </div>
+    <div class="deck" id="other-deck2" style="display: none">
+        <p class="title">Title</p>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna.</p>
+        <div class="deck-btns">
+            <a href="/practice/deck-id" class="practice-btn">
+                <button>Practice</button>
+            </a>
+        </div>
+    </div>
+    <div class="deck" id="other-deck3" style="display: none">
+        <p class="title">Title</p>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna.</p>
+        <div class="deck-btns">
+            <a href="/practice/deck-id" class="practice-btn">
+                <button>Practice</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Display only if user has more decks than the visible amount supports -->
+    <div class="controls" id="other-decks-controls" style="display: none">
+        <div class="control c-left">
+            <button onclick="goleft_other()" id="other-c-left">&larr;</button>
+        </div>
+        <div class="control c-right">
+            <button onclick="goright_other()" id="other-c-right">&rarr;</button>
+        </div>
+    </div>
+</div>
+
+<div class="ahuet" style="height: 100px;"></div>
+
+<div class="info">
+    <div id="user-id" data="{{ user }}"></div>
+    <div id="my-decks-info" data="{{ user_decks }}"></div>
+    <div id="other-decks-info" data="{{ other_decks }}"></div>
+</div>
 {% endblock %}

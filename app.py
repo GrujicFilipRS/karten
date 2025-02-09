@@ -9,7 +9,6 @@ from config import config
 from tools import search
 from api.routes import api_bp
 
-
 template_dir = "templates"
 static_dir = "static"
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
@@ -69,7 +68,8 @@ def view_deck(deck_id: int):
     return render_template(
         "view_deck.html",
         deck=deck_dict,
-        is_my_deck=is_my_deck
+        is_my_deck=is_my_deck,
+        title=f"Flashcards {deck_dict['deck_name']}"
     )
 
 

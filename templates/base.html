@@ -12,6 +12,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+<header>
     <nav>
         <p class="title">{{ title }}</p>
         <button class="user-btn" onclick="toggleNavBar()">
@@ -20,19 +21,25 @@
     </nav>
 
     <div class="nav-btns" id="nav-btns" style="display: none">
-        <a href="/"><button>
-            Dashboard
-            <img src="{{ url_for('static', filename='img/dashboard.png') }}" alt="Dashboard Icon">
-        </button></a>
+        <a href="/">
+            <button>
+                Dashboard
+                <img src="{{ url_for('static', filename='img/dashboard.png') }}" alt="Dashboard Icon">
+            </button>
+        </a>
 
-        <a href="/logout"><button class="logout-btn">
-            Log out
-            <img src="{{ url_for('static', filename='img/logout.png') }}" alt="Logout Icon">
-        </button></a>
+        <a href="/logout">
+            <button class="logout-btn">
+                Log out
+                <img src="{{ url_for('static', filename='img/logout.png') }}" alt="Logout Icon">
+            </button>
+        </a>
     </div>
+</header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<main>
+    {% block content %}{% endblock %}
+</main>
+
 </body>
 </html>

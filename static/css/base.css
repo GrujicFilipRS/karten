@@ -127,7 +127,7 @@ body {
 nav {
     display: flex;
     justify-content: space-between;
-    padding-top: 50px;
+    padding-top: 20px;
     margin-left: 50px;
     margin-right: 100px;
     align-items: center;
