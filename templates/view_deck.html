@@ -2,6 +2,13 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/view_deck.css') }}">
+    <script defer>
+        const cards = {{ deck["cards"] | tojson }};
+        const deckId = {{ deck.deck_id }};
+        const currentUserId = {{ current_user.id }};
+        const isMyDeck = "{{ is_my_deck }}" == "True";
+    </script>
+    <script src="../static/js/view_deck.js" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -40,14 +47,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    const cards = {{ deck["cards"] | tojson }};
-    const deckId = {{ deck.deck_id }};
-    const currentUserId = {{ current_user.id }};
-    const isMyDeck = "{{ is_my_deck }}" == "True";
-</script>
-
-<script src="../static/js/view_deck.js"></script>
 
 {% endblock %}
