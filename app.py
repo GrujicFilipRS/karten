@@ -129,14 +129,23 @@ def login_page():
         user = db_sess.query(User).filter(User.username == login_form.username.data).first()
         if not (user and user.check_password(login_form.password.data)):
             return render_template(
-                "login.html",
-                login_form=login_form,
+                'login_signup.html',
+                form_action=url_for('login_page'),
+                form_class='login-form',
+                title='Login',
+                form=login_form,
                 message="false_mail_or_password"
             )
         login_user(user, remember=login_form.remember_me.data)
         db_sess.close()
         return redirect(url_for('index'))
-    return render_template("login.html", login_form=login_form)
+    return render_template(
+        'login_signup.html',
+        form_action=url_for('login_page'),
+        form_class='login-form',
+        title='Login',
+        form=login_form
+    )
 
 
 @app.route('/logout')
@@ -156,9 +165,11 @@ def signup_page():
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.username == sign_up_form.username.data).first() is not None:
             return render_template(
-                'signup.html',
+                'login_signup.html',
+                form_class="signup-form",
+                title="Sign up",
                 message="username_exists",
-                sign_up_form=sign_up_form
+                form=sign_up_form,
             )
         user = User(username=sign_up_form.username.data)
         user.set_password(sign_up_form.password.data)
@@ -167,7 +178,12 @@ def signup_page():
         login_user(user)
         db_sess.close()
         return redirect(url_for('dashboard'))
-    return render_template('signup.html', sign_up_form=sign_up_form)
+    return render_template(
+        'login_signup.html',
+        form_class="signup-form",
+        title="Sign up",
+        form=sign_up_form,
+    )
 
 
 @app.route('/search/<string:search_text>', methods=["GET", "POST"])

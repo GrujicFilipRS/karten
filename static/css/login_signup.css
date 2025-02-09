@@ -1,4 +1,4 @@
-body {
+main {
     display: flex;
     justify-content: center;
     height: 100vh;
@@ -12,7 +12,7 @@ form {
     justify-content: center;
 }
 
-.log-sign-txt p {
+.log-sign-txt {
     color: white;
     text-align: center;
     font-size: 32pt;
@@ -22,7 +22,7 @@ form {
     color: #7F7F7F;
 }
 
-.options {
+.buttons {
     display: flex;
     color: white;
     width: 650px;
@@ -30,7 +30,7 @@ form {
     margin-top: 45px;
 }
 
-.options p {
+.buttons p {
     font-size: 24pt;
     margin-left: 35px;
     margin-right: 35px;
@@ -59,29 +59,70 @@ form {
     font-size: 20pt;
 }
 
-.log-sign-txt p a {
+.log-sign-txt a {
     transition: 0.25s;
 }
 
-.log-sign-txt p a:hover {
+.log-sign-txt a:hover {
     color: #C5C5C5;
 }
 
+.pwd-conf-input {
+    margin-top: 10px;
+}
+
+.continue-with-google {
+    background-color: #1F1F21;
+    border: 1px solid white;
+    width: 260px;
+    height: 60px;
+    display: flex;
+    color: white;
+    border-radius: 20px;
+    transition: 0.25s;
+}
+
+.continue-with-google-img {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    margin-left: 5px;
+}
+
+.continue-with-google img {
+    height: 75%;
+    width: 75%;
+}
+
+.continue-with-google .continue-with-google-txt {
+    font-size: 16pt;
+    margin: 0;
+    width: calc(100% - 65px);
+    text-align: left;
+}
+
+.continue-with-google:hover {
+    background-color: #151516;
+    cursor: pointer;
+}
+
 @media (max-width: 650px) {
-    .options {
+    .buttons {
         flex-direction: column;
         width: 100vw;
     }
 
-    .options p {
+    .buttons p {
         text-align: center;
     }
 
-    .options .primary-btn {
+    .buttons .primary-btn {
         margin: auto;
     }
 
-    .options .google-cont {
+    .buttons .continue-with-google {
         margin: auto;
     }
 
@@ -98,11 +139,7 @@ form {
         margin-top: 0px;
     }
 
-    .log-sign-txt p {
-        font-size: 28pt;
-    }
-
-    .options {
+    .buttons {
         margin-top: 15px;
     }
 }

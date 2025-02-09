@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/login_signup.css">
+    <script src="../static/js/{{ form_class }}.js" defer></script>
+    <title>Karten - {{ title }}</title>
+</head>
+
+<body>
+<main>
+    <form action="" method="POST" class="{{ form_class }}">
+        {{ form.hidden_tag() }}
+
+        <div class="log-sign-txt">
+            {% if form_class == "signup-form" %}
+            <a href="/login" class="grey-txt">Log in / </a><b>Sign up</b>
+            {% else %}
+            <b>Log in</b> <a href="/signup" class="grey-txt"> / Sign up</a>
+            {% endif %}
+        </div>
+
+        <div class="form-fields">
+            <div class="input-field user-input">
+                <div class="input-img user-img"><img src="../static/img/user.png"></div>
+                <div class="input-input user-input-field">
+                    {{ form.username(class="form-control", placeholder="Username") }}
+                </div>
+            </div>
+            {% for error in form.username.errors %}
+            <div class="error-msg">
+                {{ error }}
+            </div>
+            {% endfor %}
+
+            <div class="input-field pwd-input">
+                <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
+                <div class="input-input pwd-input-field">
+                    {{ form.password(class="form-control", placeholder="Password") }}
+                </div>
+            </div>
+            {% for error in form.password.errors %}
+            <div class="error-msg">
+                {{ error }}
+            </div>
+            {% endfor %}
+
+            {% if form_class == "signup-form" %}
+            <div class="input-field pwd-conf-input">
+                <div class="input-img pwd-img"><img src="../static/img/pwd.png"></div>
+                <div class="input-input pwd-input-field">
+                    {{ form.repeat_password(class="form-control", placeholder="Confirm password") }}
+                </div>
+            </div>
+            {% for error in form.repeat_password.errors %}
+            <div class="error-msg">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="buttons">
+            <div class="submit-button">
+                {{ form.submit(type="submit", class="btn btn-primary primary-btn") }}
+            </div>
+
+            <p>OR</p>
+
+            <a class="continue-with-google">
+                <div class="continue-with-google-img">
+                    <img src="../static/img/google.png">
+                </div>
+                <p class="continue-with-google-txt">
+                    Continue with Google
+                </p>
+            </a>
+        </div>
+
+        <div class="error-msg">
+            {{ "There is no account with that username and password" if message == "false_mail_or_password" }}
+        </div>
+    </form>
+</main>
+</body>
+</html>

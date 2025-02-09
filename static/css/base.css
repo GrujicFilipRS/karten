@@ -81,43 +81,6 @@ body {
     opacity: 1;
 }
 
-.google-cont {
-    background-color: #1F1F21;
-    border: 1px solid white;
-    width: 260px;
-    height: 60px;
-    display: flex;
-    color: white;
-    border-radius: 20px;
-    transition: 0.25s;
-}
-
-.google-cont-img {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    aspect-ratio: 1 / 1;
-    height: 100%;
-    margin-left: 5px;
-}
-
-.google-cont img {
-    height: 75%;
-    width: 75%;
-}
-
-.google-cont .google-cont-txt {
-    font-size: 16pt;
-    margin: 0;
-    width: calc(100% - 65px);
-    text-align: left;
-}
-
-.google-cont:hover {
-    background-color: #151516;
-    cursor: pointer;
-}
-
 .title {
     color: white;
     font-size: 40pt;
