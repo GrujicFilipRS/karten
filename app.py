@@ -6,7 +6,7 @@ from data import db_session
 from data.__all_models import User, Deck, Card, SavedDeck
 from forms.user import UserLogInForm, UserSignUpForm
 from config import config
-from tools import search, deck_utils
+from tools import search, deck_utils, user_service
 from api.routes import api_bp
 
 template_dir = "templates"
@@ -125,9 +125,14 @@ def login_page():
 
     login_form = UserLogInForm()
     if login_form.validate_on_submit():
+        username_data = login_form.username.data
+        password_data = login_form.password.data
+        remember_me_data = login_form.remember_me.data
+
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.username == login_form.username.data).first()
-        if not (user and user.check_password(login_form.password.data)):
+        user = db_sess.query(User).filter(User.username == username_data).first()
+        db_sess.close()
+        if not (user and user.check_password(password_data)):
             return render_template(
                 'login_signup.html',
                 form_action=url_for('login_page'),
@@ -136,8 +141,7 @@ def login_page():
                 form=login_form,
                 message="false_mail_or_password"
             )
-        login_user(user, remember=login_form.remember_me.data)
-        db_sess.close()
+        login_user(user, remember=remember_me_data)
         return redirect(url_for('index'))
     return render_template(
         'login_signup.html',
@@ -162,8 +166,12 @@ def signup_page():
 
     sign_up_form = UserSignUpForm()
     if sign_up_form.validate_on_submit():
+        username_data = sign_up_form.username.data
+        password_data = sign_up_form.password.data
+
         db_sess = db_session.create_session()
-        if db_sess.query(User).filter(User.username == sign_up_form.username.data).first() is not None:
+        existing_user = db_sess.query(User).filter(User.username == username_data).first()
+        if existing_user is not None:
             return render_template(
                 'login_signup.html',
                 form_class="signup-form",
@@ -171,12 +179,9 @@ def signup_page():
                 message="username_exists",
                 form=sign_up_form,
             )
-        user = User(username=sign_up_form.username.data)
-        user.set_password(sign_up_form.password.data)
-        db_sess.add(user)
-        db_sess.commit()
-        login_user(user)
+        user_service.register_user(username_data, password_data, db_sess)
         db_sess.close()
+
         return redirect(url_for('dashboard'))
     return render_template(
         'login_signup.html',
