@@ -11,7 +11,7 @@ def get_user_decks(user_id: int, db_sess: Session) -> List[Deck]:
     :param db_sess: An active database session.
     :return: A list of Deck objects.
     """
-    user_decks = db_sess.query(Deck).filter(Deck.id == user_id).all()
+    user_decks = db_sess.query(Deck).filter(Deck.user_created_id == user_id).all()
     return user_decks
 
 
