@@ -205,19 +205,11 @@ def search_decks(search_text: str):
     )
 
 
-@app.route('/search', methods=['GET'])
-def search_ui():
-    return render_template(
-        'search_ui.html',
-    )
-
-
 if __name__ == '__main__':
     db_session.global_init("db/karten.sqlite")
 
     sess = db_session.create_session()
-    decks = sess.query(Deck).all()
-    app.tokens_index = {deck.id: search.tokenize(deck.name) for deck in decks}
+    app.tokens_index = search.tokenize_all_decks(sess)
     sess.close()
 
     app.run(debug=True, threaded=True)

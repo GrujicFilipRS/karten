@@ -18,6 +18,16 @@ def tokenize(text: str) -> FrozenSet[str]:
     return frozenset(EnglishStemmer().stem(i) for i in word_tokenize(text) if i.isalnum())
 
 
+def tokenize_all_decks(db_sess: Session) -> Dict[int, FrozenSet[str]]:
+    """
+    Tokenizes the names of all decks from the database
+    :param db_sess: An active database session.
+    :return: A dictionary with deck IDs as keys and tokenized deck names as values.
+    """
+    all_decks = db_sess.query(Deck).all()
+    return {deck.id: tokenize(deck.name) for deck in all_decks}
+
+
 def search_decks(search_text: str, tokens_index: Dict[int, FrozenSet[str]], db_sess: Session) -> List[Deck]:
     """
     Searches for decks matching the given search text based on token similarity.
