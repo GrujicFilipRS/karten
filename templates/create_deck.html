@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Deck</title>
+    <script src="/static/js/create_deck.js" defer></script>
+</head>
+
+<body>
+<h1>Create a New Deck</h1>
+<label>Deck Name: <input type="text" id="deck-name" required></label>
+<br>
+<label>Description: <input type="text" id="deck-description"></label>
+<br><br>
+
+<div id="cards-container">
+    <!-- Cards will be dynamically added here -->
+</div>
+
+<button id="add-card">+</button>
+<br>
+<div id="error-message" style="color: red;"></div>
+<br>
+<button id="submit-deck">Submit</button>
+</body>
+</html>
