@@ -82,13 +82,20 @@ def view_deck(deck_id: int):
     )
 
 
+@app.route('/create_deck', methods=['GET', 'POST'])
+@login_required
+def create_deck():
+    return render_template('create_deck.html')
+
+
 @app.route('/deck/<int:deck_id>/edit')
 @login_required
 def edit_deck(deck_id: int):
     db_sess = db_session.create_session()
-    deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
-    user = db_sess.query(User).filter(User.id == deck.user_created_id).first()
+    deck = db_sess.query(Deck).get(deck_id)
+    user = db_sess.query(User).get(deck.user_created_id)
     db_sess.close()
+
     if user.id != current_user.id:
         flash('You do not have permission to edit this deck.')
         return redirect(url_for('view_deck', deck_id=deck_id))
@@ -108,13 +115,17 @@ def edit_deck(deck_id: int):
 @login_required
 def delete_deck(deck_id: int):
     db_sess = db_session.create_session()
-    deck = db_sess.query(Deck).filter(Deck.id == deck_id).first()
-    user = db_sess.query(User).filter(User.id == deck.user_created_id).first()
-    db_sess.close()
+    deck = db_sess.query(Deck).get(deck_id)
+    user = db_sess.query(User).get(deck.user_created_id)
+
     if user.id != current_user.id:
         flash('You do not have permission to edit this deck.')
+        db_sess.close()
         return redirect(url_for('view_deck', deck_id=deck_id))
+
     db_sess.delete(deck)
+    db_sess.commit()
+    db_sess.close()
     return redirect(url_for('dashboard'))
 
 

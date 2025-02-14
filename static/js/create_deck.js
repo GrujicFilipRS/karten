@@ -1,3 +1,6 @@
+const MIN_CARDS_IN_DECK = 5;
+
+
 const cardsContainer = document.getElementById("cards-container");
 
 initializePage()
@@ -6,7 +9,7 @@ document.getElementById("add-card").addEventListener("click", addNewCard);
 document.getElementById("submit-deck").addEventListener("click", submitDeck);
 
 function initializePage() {
-    while (cardsContainer.children.length < 5) {
+    while (cardsContainer.children.length < MIN_CARDS_IN_DECK) {
         addNewCard();
     }
 }
@@ -73,8 +76,8 @@ async function submitDeck() {
         return;
     }
 
-    if (cards.length < 5) {
-        showError("Deck must contain 5 cards minimum.");
+    if (cards.length < MIN_CARDS_IN_DECK) {
+        showError(`Deck must contain ${MIN_CARDS_IN_DECK} cards minimum.`);
         return;
     }
 
@@ -98,7 +101,7 @@ async function submitDeck() {
 
 async function postDeck(deck_name, description, cards) {
     try {
-        const url = new URL('/api/create_deck', window.location.origin);
+        const url = new URL('/api/deck', window.location.origin);
 
         const response = await fetch(url, {
             method: 'POST',
